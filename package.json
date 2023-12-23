@@ -1,0 +1,12 @@
+{
+  "name": "gameuis",
+  "version": "1.0.0",
+  "description": "Demo of Game UIs for App School Winter 24'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cp2sup": "./scripts/transport.sh"
+  },
+  "author": "Sean al-Baroudi",
+  "license": "MIT"
+}
