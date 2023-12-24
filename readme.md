@@ -23,7 +23,11 @@ The board game terminal renderer `(boardprint <app/desk name> )` must...
     - There is a mapping of pieces to players
     - Only one object can exist in any square (no clobbering or stacking).
 
-
-
 #### Renderer (in Browser):
+
+This can be done with an action-update pattern in a Gall App + an Urbit React Template project, but instead I would like to try this with Sail.
+
+To start, let's build a tic-tac-toe front-end with Sail, and get it running in the browser.
+
+The following Steps were done to set up a Sail Project:
 
