@@ -120,6 +120,105 @@ apply the structure correctly, for some reason.
 - we can cast as follows: ``board`~[['a' 'b' 'c'] ['d' 'e' 'f'] ['g' 'h' 'i']]`
     - lest saves the day from our find-fork errors...
 
+### Dec 25th and Dec 26th:
+
+- Read the overview of sail. The %squad app has the simplest implementation of squad. Will investigate how it works
+by tinkering with the app.
+
+- it just seems to have a /squad/index.hoon page for the front end, and a docket-0 file for Landscape.
+    - localhost:8080/squad
+
+
+- Basic Idea:  .hoon file -> en-xml: converted via $manx -> Eyre, converts to HTML octets and sent to FE.
+- How is the page served?
+- what about the %squad app, how does it initiate the page serve for the FE?
+    - done on ++on-watch arm??
+
+Layout of the Code:
+
+**Our index is structured as follows: **
+
+|=  [bol=bowl:gall =squads =acls =members =page]
+($)  |^  ^-  octs
+::In rev order:  Convert to octets for HTML packet. Convert to a cord. Convert to a manx tape. Input: Raw Sail Markup.
+        ($)  as-octs:mimes:html  %-  crip  %-  en-xml:html  manx  <our sail>
+
+;html
+  ;head
+    ...
+  ==
+  ;body
+    ...
+  ==
+==
+
+- With the above modular structure fed into the first gate in the chain, like we would expect.
+- Below the modular structure, is a series of ++ (luslus) arms, which flesh out the modular strucure
+before it is sent off to the FE.
+
+**But how is it served? Enter squad.hoon:
+
+- Our index.hoon file is imported with a library rune:
+
+/=  index  /app/squad/index
+
+
+- On init:  Bind to localhost/squad URL using an ARVO call.
+
+- unlike what i suspected, there isn't any http serving in the ++on-watch or ++on-agent arm...
+- its all done in a sub-arm of the ++on-poke arm (!)
+- and its quite complicated :S
+
+- start-up:
+    - init for the app binds our app to the */squad URL (doing an Arvo call)
+    - when we navigate to /localhost/squad, a GET request for the squad page is made.
+    - we go through the ++on-poke control flow, and end up at:
+
+```
+   |=  [rid=@ta req=inbound-request:eyre]
+    ^-  (quip card _state)
+
+    ::There is a large amount of code to check if we have a non-recognizable reuqest,
+    :: or if we have access restriction. Assuming this passes, we move onto the GET request:
+
+     ?+  method.request.req
+
+        .
+
+        %'GET'
+      :: alter our state, with a modified page
+      :: *^  is NOT a rune. What does it do, exactly?
+
+      :_  state(page *^page)
+      :: make=-200 is a gate call with two args pinned to sample. the RID and then our page data
+      ::(index ...) is our page that can also be run and called (its just one big gate with lots of nested cores)
+      ::recalla the input to index gate is [bol=bowl:gall =squads =acls =members =page]
+      ::so we just regenerate our page XML to octs, using our app state, really.
+      (make-200 rid (index bol squads acls members page))
+
+    ::make-200 is just an arm with a gate:
+      ++  make-200
+    |=  [rid=@ta dat=octs]
+    ^-  (list card)
+    %^    give-http
+        rid
+      :-  200
+      :~  ['Content-Type' 'text/html']
+          ['Content-Length' (crip ((d-co:co 1) p.dat))]
+      ==
+    [~ dat]
+```
+
+So a basic example on how Sail is served up has been reviewed. Really, we need a simple sail page that mimics our
+tui: It has a header with infomration, and a footer with a generated board. That is the goal we are aiming for...
+
+- Next steps:  Get a simple sail page served up in %gameuis - copy the index.hoon coding structure.
+
+
+
+
+
+
 
 
 
