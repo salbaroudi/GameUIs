@@ -209,11 +209,41 @@ before it is sent off to the FE.
     [~ dat]
 ```
 
+- what is page?  It is a structure as follows (in sur):
+
+```
+:: this just keeps track of the target page and section
+:: for the front-end, so we can use a post/redirect/get
+:: pattern while remembering where to focus
+::
++$  page  [sect=@t gid=(unit gid) success=?]
+```
+
 So a basic example on how Sail is served up has been reviewed. Really, we need a simple sail page that mimics our
 tui: It has a header with infomration, and a footer with a generated board. That is the goal we are aiming for...
 
 - Next steps:  Get a simple sail page served up in %gameuis - copy the index.hoon coding structure.
 
+## December 27th:
+
+With a basic understanding and a Sail template in hand, its time to implement an fe-board.hoon file, and serve up a page using our ++on-poke arm.
+
+Steps to set up the project: 
+
+1)- Template for the %echo app was copied. So mar, sur and app files were copied over, and names modified (echo -> gameuis)
+- all docket support files were present already in /sup/gameuis (follow steps in https://developers.urbit.org/guides/quickstart/groups-guide#dependencies)
+- at this point, Gall App is commited and booted. Change all the names as required, if any are missed.
+- Quick note: fe-board.hoon is empty, Gall just ignores this fact. cool.
+
+2)
+
+- From squad, add the URL binding code (for Arvo) is placed in ++on-init
+- very basic template for fe-board.hoon is created. Just a single <p>. index.hoon is significantly stripped down.
+- 
+```
+
+
+```
 
 
 

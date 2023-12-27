@@ -132,8 +132,10 @@
     :: return it. (we'll write that file in the next section)
     ::
         %'GET'
-      ~&  "page alone:"  ~&  page
-      ~&  "op'ed page"  ~&  *^page
+      =/  inspect1  !,  *hoon  page
+      ~&  "page alone:"  ~&  inspect1
+      =/  inspect2  !,  *hoon  ^page
+      ~&  "op'ed page"  ~&  inspect2
       :_  state(page *^page)
       (make-200 rid (index bol squads acls members page))
     :: if it's a POST request, we first make sure the body
