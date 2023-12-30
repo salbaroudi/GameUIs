@@ -239,7 +239,11 @@ Steps to set up the project:
 
 - From squad, add the URL binding code (for Arvo) is placed in ++on-init
 - very basic template for fe-board.hoon is created. Just a single <p>. index.hoon is significantly stripped down.
-- 
+- in squad, state and this are custom defined (state is our 'this' that we would see in %delta and %echo). Needed to go around and change everything.
+- alter the index.hoon: Cut out all the squad acl gid stuff. Also cut out all the support arms (because they all reference gids) 
+- Rename bol -> bowl (no custom alias)
+- finally, this all worked but we got an internal server error when loading localhost:8080/gameuis. Error lives in the on watch arm, so this needs to be copied over from squad
+    => Need to investigate running squad app to figure this out. On watch doesn't appear to have any useful code (??)
 ```
 
 

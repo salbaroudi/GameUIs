@@ -7,4 +7,5 @@
   $%  [%init values=(list @)]
       action
   ==
++$  page  [sect=@t success=?]
 --
