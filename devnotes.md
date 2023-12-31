@@ -244,11 +244,33 @@ Steps to set up the project:
 - Rename bol -> bowl (no custom alias)
 - finally, this all worked but we got an internal server error when loading localhost:8080/gameuis. Error lives in the on watch arm, so this needs to be copied over from squad
     => Need to investigate running squad app to figure this out. On watch doesn't appear to have any useful code (??)
-```
+- Peppering squad wiht ~&'s, we get the following order after installation (on-init bound has already occured) (and page refresh:)
+1) On watch (so our FE Eyre made an initial subscription)
+    specifically for on-watch, we get a non-ship HTTP request, and apparently do nothing. So what are we missing??
+2) On Poke -> %Get request made
+
+We do not see on-arvo called (this would only be seen once, after on-init has registered our URL with Arvo, as a respose).
 
 
-```
 
+### Dec 30th:
+
+Fell into a subtle trap. Consider:
+
+'''
++$  row  [c1=@t c2=@t c3=@t]
++$  board  (lest row) ::[r1=row r2=row r3=row]
+
+|=  c=@ud
+=/  tttboard  ^-  board  ~[[c1='X' c2='_' c3='_'] [c1='X' c2='_' c3='O'] [c1='X' c2='_' c3='0']]
+|-
+    ?~  tttboard  (add 1 2)
+        ~&  i.tttboard
+        %=  $  tttboard  t.tttboard  ==
+'''
+
+You get an endless mint-vain error, because::  your board is a lest (non-empty list) by definition.
+    => Thus, the compiler thinks it will never get to the null case of ?~.
 
 
 

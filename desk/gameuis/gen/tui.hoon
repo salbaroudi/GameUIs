@@ -3,7 +3,7 @@
     |^
         (printboard (printheader a b))
         +$  row  [c1=@t c2=@t c3=@t]
-        +$  board  (lest row) ::[r1=row r2=row r3=row]
+        +$  board  (list row) ::[r1=row r2=row r3=row]
         ++  printheader
             |=  [a=@ud b=@ud]
                 =/  gamename  "Tic Tac Toe"

@@ -15,6 +15,8 @@
     %-  of
     :~  [%push (ot ~[target+(se %p) value+ni])]
         [%pop (se %p)]
+        [%teststate (se %p)]
+        [%clearstate (se %p)]
     ==
   --
 ++  grad  %noun

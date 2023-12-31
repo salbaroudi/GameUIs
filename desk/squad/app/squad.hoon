@@ -83,6 +83,7 @@
 ++  on-poke
   |=  [=mark =vase]
   |^  ^-  (quip card _this)
+  ~&  "on-poke called"
   :: assert that only the local ship (and its front-end) can
   :: poke our agent. our.bol is the local ship and src.bol is
   :: the source of the request - it's cryptographically guaranteed
@@ -132,6 +133,7 @@
     :: return it. (we'll write that file in the next section)
     ::
         %'GET'
+      ~&  "Get request made"
       :_  state(page *^page)
       (make-200 rid (index bol squads acls members page))
     :: if it's a POST request, we first make sure the body
@@ -646,16 +648,19 @@
 ++  on-watch
   |=  =path
   |^  ^-  (quip card _this)
+  ~&  "on-watch called"
   :: if it's an HTTP request that's not from the local
   :: ship, disregard
   ::
   ?:  &(=(our.bol src.bol) ?=([%http-response *] path))
+    ~&  "http-response"
     `this
   :: if it's a local request for ALL state, check it's
   :: actually local and fulfill it with an %init-all $upd
   ::
   ?:  ?=([%local %all ~] path)
     ?>  =(our.bol src.bol)
+    ~&  "Getting the ALL state"
     :_  this
     :~  %-  fact-init:io
         squad-did+!>(`upd`[%init-all squads acls members])
@@ -664,6 +669,8 @@
   :: it means it's probably a remote ship trying to subscribe
   :: for updates forking a squad we host
   ::
+
+  ~&  "Beyond..."
   ?>  ?=([@ ~] path)
   :: convert the path into a gid
   ::
@@ -1029,9 +1036,11 @@
 ++  on-arvo
   |=  [=wire =sign-arvo]
   ^-  (quip card _this)
+  ~&  "hit on-arvo"
   ?.  ?=([%bind ~] wire)
     (on-arvo:def [wire sign-arvo])
   ?.  ?=([%eyre %bound *] sign-arvo)
+    ~&  "Successfully bound wire to Kernel"
     (on-arvo:def [wire sign-arvo])
   ~?  !accepted.sign-arvo
     %eyre-rejected-squad-binding

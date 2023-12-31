@@ -43,21 +43,13 @@
             |=  act=action
                 ^-  (quip card _this)
                 ?-    -.act
-                    %push
-                    ?:  =(our.bowl target.act)
-                    :_  this(values [value.act values])
-                    [%give %fact ~[/values] %gameuis-update !>(`update`act)]~
-                    ?>  =(our.bowl src.bowl)
-                    :_  this
-                    [%pass /pokes %agent [target.act %gameuis] %poke mark vase]~
-
-                    %pop
-                    ?:  =(our.bowl target.act)
-                    :_  this(values ?~(values ~ t.values))
-                    [%give %fact ~[/values] %gameuis-update !>(`update`act)]~
-                    ?>  =(our.bowl src.bowl)
-                    :_  this
-                    [%pass /pokes %agent [target.act %gameuis] %poke mark vase]~
+                    ::Dummied, remove later
+                    %push  `this
+                    %pop  `this
+                    ::Here, we set a basic state using a poke via the terminal. This will test our Sail Traps.
+                    %teststate  `this
+                    ::The state can also be reset with a poke, should be choose to. Tests the Sail Null Case.
+                    %clearstate  `this
                 == ::End ?-
         ++  handle-http
             |=  [rid=@ta req=inbound-request:eyre]
@@ -91,8 +83,6 @@
                         :_  this(page *^page)
                         (make-200 rid (fe-board bowl page))
                     == ::End ?+ and End arm
-
-
         ++  make-200
             |=  [rid=@ta dat=octs]
             ^-  (list card)
@@ -120,9 +110,10 @@
 ++  on-watch
   |=  =path
   ^-  (quip card _this)
-  ?>  ?=([%values ~] path)
-  :_  this
-  [%give %fact ~ %gameuis-update !>(`update`[%init values])]~
+  `this
+  ::?>  ?=([%values ~] path)
+  :::_  this
+  ::[%give %fact ~ %gameuis-update !>(`update`[%init values])]~
 ++  on-arvo   on-arvo:default
 ++  on-leave  on-leave:default
 ++  on-agent  on-agent:default
