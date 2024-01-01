@@ -11,6 +11,7 @@
 +$  page  [sect=@t success=?]
 ::Rudimentary board structures...
 +$  bdim  [rows=@ud cols=@ud]
++$  color  ?(%red %green %blue)
 :: Just map 1=red, 2=green 3=blue for now...
 +$  player  [name=@p pnum=@ud spectrum=@ud]
 +$  playerinfo  (map @ud player)

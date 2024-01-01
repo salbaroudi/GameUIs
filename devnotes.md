@@ -273,8 +273,27 @@ You get an endless mint-vain error, because::  your board is a lest (non-empty l
     => Thus, the compiler thinks it will never get to the null case of ?~.
 
 
+### Jan 1st:
 
+- Submitted proposal to UF.
+- Next dev investigation: How to we render dynamically generated html content (such as making tags based on lists)? The following example
+using mictar (;*) gives us a hint:
 
+=/  nums=(list @ud)  (gulf 1 9)
+;p
+  ;*  %+  turn  nums
+      |=  n=@ud
+      ?:  =(0 (mod n 2))
+        ;sup: {(a-co:co n)}
+      ;sub: {(a-co:co n)}
+==
+
+- mictar takes a series of $manxes and generates a $marl (a list of xml nodes)
+
+- For review: a manx is a dynamic XML node. We can hold large section of an HTML document in a manx, as they can be nested in one
+parent node.
+
+- A marl is a list of manxes.  Because not everything is nested (such as with li elements in a <ul> tag), this necessarily must exist.
 
 
 

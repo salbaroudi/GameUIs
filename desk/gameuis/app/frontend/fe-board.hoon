@@ -19,6 +19,8 @@
 :: 1. we return a $manx, which is urbit's datatype to represent an XML structure
 ::
 ^-  manx
+=/  nums=(list @ud)  (gulf 1 9)
+
 :: here begins the construction of our HTML structure. We use Sail, a domain-specific language built
 :: into the hoon compiler for this purpose
 ::
@@ -36,16 +38,10 @@
     ;br;
     ;br;
     ;div.board
-        ;div.square: X
-        ;div.square: X
-        ;div.square: 0
-        ;div.square: 0
-        ;div.square: X
-        ;div.square: 0
-        ;div.square: X
-        ;div.square: 0
-        ;div.square: X
-    ==  ::needed as we have a list of tags
+      ;*  %+  turn  nums
+          |=  n=@ud
+            ;div.square: {<n>}
+    ==
   == ::body
 == ::html
 ++  style
