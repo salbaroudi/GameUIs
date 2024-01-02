@@ -295,6 +295,9 @@ parent node.
 
 - A marl is a list of manxes.  Because not everything is nested (such as with li elements in a <ul> tag), this necessarily must exist.
 
+- The basic gate code above works, but its not a trap (its a map function using turn).
+- Note: THe tisfas had to be done outside of the Sail markup (not found errors). Is this common, or is there a workaround?
+
 
 
 

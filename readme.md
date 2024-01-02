@@ -6,13 +6,13 @@ This project folder serves as a proposal for terminal and browser board-game dis
 
 ### Requirements:
 
-There are two support tools that are required: A terminal printer, and a web based front-end.  Both assume that students will be developing board game Gall apps.  Likewise, our terminal printing library and front end must scry the state of the student's apps, and print them out accordingly.
+There are two support tools that are required: A terminal printer, and a web based front-end.  Both assume that students will be developing board game Gall apps.  Likewise, our terminal printing library and front end must scry the state of the student's apps. Students should not have to pass long argument lists to our tools, to see the state of their apps.
 
 ### General Assumptions (Shared by both tools):
 
 Each tool must:
 
-- Scry the state of a student's boardgame.
+- Scry the state of a student's board-game.
 - Will have two fixed sections to display information:
     - 1) A Header Section, that displays general game information.
         - *Example:* Displays player names, game name, other board-game information.
@@ -22,10 +22,11 @@ Structural Assumptions (for Generic Board Game Representation in Hoon)
 - Assumes the following for *any and all* boards it will encounter:
     - Board has a specific **Width** and **Height**. It has a rectangular shape, with no gaps.
     - A board is made up of squares.
+    - There are K types of squares.
     - There are N number of players.
-    - There are M kinds of pieces (or objects).
-    - There is a mapping of pieces to players.
-    - There is a mapping of pieces to board positions.
+    - There are M kinds of game pieces (or objects).
+    - There is some kind of mapping of pieces to players.
+    - There is some kind of mapping of pieces to board positions.
 
 A simple /sur structure file for such requirements, is proposed below:
 
@@ -46,7 +47,7 @@ Appropriately, I name the library **"TWUI" or "Terminal & Web User Interface"**.
 
 #### Board Game Renderer (in Terminal) "t-ui":
 
-The board game terminal renderer will accessed via a gate call `(boardprint [parameter struct] )`.
+The board game terminal renderer will accessed via a gate call `(boardprint ... )`.
 
 Practically, it will exist as a main gate call with a series of support arms.
 

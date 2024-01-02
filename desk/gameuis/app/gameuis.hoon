@@ -9,7 +9,8 @@
   $%  state-0
   ==
 +$  state-0
-  $:  [%0 values=(list @) =page]
+    :: A very basic state to test Sail with.
+  $:  [%0 values=(list @ud) gameboard=board playmap=playerinfo =page]
   ==
 +$  card  card:agent:gall
 --
@@ -46,10 +47,19 @@
                     ::Dummied, remove later
                     %push  `this
                     %pop  `this
-                    ::Here, we set a basic state using a poke via the terminal. This will test our Sail Traps.
-                    %teststate  `this
+                    ::Here, we set a basic state using a poke via the terminal. This will test our Sail render gates
+                    %teststate
+                    =/  p1  ^-  player  [~nodsup-sorlex 1 %spade %red]
+                    =/  p2  ^-  player  [~miglex-todsup 2 %diamond %green]
+                    =/  row1  ^-  boardrow  ~[[%white %empty] [%black %spade] [%white %diamond]]
+                    =/  row2  ^-  boardrow  ~[[%black %spade] [%white %diamond] [%black %diamond]]
+                    =/  row3  ^-  boardrow  ~[[%white %spade] [%black %empty] [%white %empty]]
+                    =/  theboard  ^-  board  ~[row1 row2 row3]
+                    =/  theplayermap  (my ~[[1 p1] [2 p2]])
+                    :_  %=  this  playmap  theplayermap  gameboard  theboard  ==  ~
                     ::The state can also be reset with a poke, should be choose to. Tests the Sail Null Case.
-                    %clearstate  `this
+                    %clearstate
+                    :_  %=  this  playmap  *playerinfo  gameboard  *board  ==  ~
                 == ::End ?-
         ++  handle-http
             |=  [rid=@ta req=inbound-request:eyre]
@@ -80,8 +90,8 @@
                     :: return it. (we'll write that file in the next section)
                     ::
                         %'GET'
-                        :_  this(page *^page)
-                        (make-200 rid (fe-board bowl page))
+                        :_  this(page *^page)  ::Slam sample state into the gate. 
+                        (make-200 rid (fe-board bowl page gameboard playmap))
                     == ::End ?+ and End arm
         ++  make-200
             |=  [rid=@ta dat=octs]

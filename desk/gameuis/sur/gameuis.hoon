@@ -9,14 +9,15 @@
   $%  [%init values=(list @)]
   ==
 +$  page  [sect=@t success=?]
-::Rudimentary board structures...
-+$  bdim  [rows=@ud cols=@ud]
-+$  color  ?(%red %green %blue)
-:: Just map 1=red, 2=green 3=blue for now...
-+$  player  [name=@p pnum=@ud spectrum=@ud]
+::Rudimentary board structures
++$  boarddims  [rows=@ud cols=@ud]
++$  colours  $?  %black  %white  %red  %green  %blue  ==
++$  tokentypes  $?  %club  %heart  %spade  %diamond  %empty  ==
++$  boardsquare  [bcolor=colours ppiece=tokentypes]
++$  boardrow  (list boardsquare)
++$  board  (list boardrow)
+::For players
++$  player  [name=@p pnum=@ud token=tokentypes colour=colours]
 +$  playerinfo  (map @ud player)
 +$  playerorder  (map @p @ud)
-::For now just branch on @uds, I had issues with type unions...
-+$  boardenv  (list @ud)
-+$  boardpieces  (list @ud)
 --
